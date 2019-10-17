@@ -119,23 +119,80 @@ def decrypt(ciphertext, key):
 	plaintext = ''.join(chr(i) for i in plain_ascii)
 	return plaintext
 
+def encrypt(plaintext, key):
+	# Creates an array of the ascii values of the plaintext and the key
+	plain_ascii = [ord(letter) for letter in plaintext]
+	key_ascii = [ord(letter) for letter in key]
+	cipher_ascii = []
+
+	# Turns each ascii value of the plaintext into the ascii value of the ciphertext
+	for i in range(len(plain_ascii)):
+
+		temp = plain_ascii[i]+key_ascii[i % len(key)]-97
+		if temp>122:
+			# Loop back to the beginning of the alphabet
+			cipher_ascii.append(temp-26)
+		else:
+			cipher_ascii.append(temp)
+
+	# Turns the array of ascii values into characters
+	ciphertext = ''.join(chr(i) for i in cipher_ascii)
+	return ciphertext
+
 def main():
-	# Reads the text file containing the ciphertext
-	text_file = open("cipher1.txt", "r")
-	ciphertext_unfiltered=text_file.read()
-	text_file.close()
+	ask = True
+	while ask:
+		text = raw_input("Enter e to encrypt, or d to decrypt: ")
+		if text =='e':
+			plaintext_unfiltered = raw_input("Enter plaintext to encrypt: ")
+			key_unfiltered = raw_input("Enter key to encrypt with: ")
+			
+			# Filters the text so it is only alphanumeric characters, and lowercase
+			plaintext = ''.join(x.lower() for x in plaintext_unfiltered if x.isalpha())	
+			key = ''.join(x.lower() for x in key_unfiltered if x.isalpha())	
+			print(key)
 
-	# Filters the text so it is only alphanumeric characters, and lowercase
-	ciphertext = ''.join(x.lower() for x in ciphertext_unfiltered if x.isalpha())
+			ciphertext = encrypt(plaintext, key)	
+			print("Ciphertext: {}".format(ciphertext))
+			print("Plaintext: {}".format(decrypt(ciphertext, key)))
 
-	key_length=get_key_length(ciphertext)
-	print("Key length is most likely {}".format(key_length))
+			ask = False	
+		elif text == 'd':
+			ciphertext_unfiltered = raw_input("Enter ciphertext to decrypt: ")
 
-	key = get_key(ciphertext, key_length)
-	plaintext = decrypt(ciphertext, key)
+			# Filters the text so it is only alphanumeric characters, and lowercase
+			ciphertext = ''.join(x.lower() for x in ciphertext_unfiltered if x.isalpha())	
 
-	print("Key: {}".format(key))
-	print("Plaintext: {}".format(plaintext))
+			askkey = True
+			while askkey:
+				torf = raw_input("Do you know the key to decrypt with? Enter y or n: ")
+				if torf == 'n':
+
+					key_length=get_key_length(ciphertext)
+					print("Key length is most likely {}".format(key_length))
+
+					key = get_key(ciphertext, key_length)
+					plaintext = decrypt(ciphertext, key)
+
+					print("Key: {}".format(key))
+					print("Plaintext: {}".format(plaintext))
+
+					askkey = False
+				elif torf == 'y':
+
+					key_unfiltered = raw_input("Enter key to decrypt with: ")
+					key = ''.join(x.lower() for x in key_unfiltered if x.isalpha())	
+					plaintext = decrypt(ciphertext, key)
+
+					print("Plaintext: {}".format(plaintext))
+
+					askkey = False
+				else:
+					print("Not a valid input")
+	
+			ask = False	
+		else:
+			print("Not a valid input")
 
 if __name__ == '__main__':
 	main()
