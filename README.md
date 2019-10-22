@@ -53,4 +53,37 @@ length         avg I.C.
 ```
 
 # 2) Finding the key:
+Since we know the key length is 7, that means we essentially have 7 Caesar cipher to break.  We will use the Chi-squared statistic to crack the key, which is a tactic to compare two frequency distributions.  Using every seventh letter starting with the first, our first sequence is 'VURZJUGRGGUGVGJQKEOAGUGKKQVWQP'.  We will try to decrypt this using all 26 letters of the English language, and compare those letter frequences with the letter frequencies of the English language using the Chi-squared statistic.  The result with the lowest statistic indicates its the closest result to English.  
+
+Example: This shows us that using a shift of 2 will yield the result closest to English.  A shift of 2 corresponds to the letter 'c' (a = 0, b = 1, c = 2...).  So we know the first letter of the key is 'c'.  This process is repeated for the rest of the key's letters.
+```
+key         deciphered sequence           chi-sq
+------------------------------------------------
+0      VURZJUGRGGUGVGJQKEOAGUGKKQVWQP     595.42
+1      UTQYITFQFFTFUFIPJDNZFTFJJPUVPO     466.86
+2      TSPXHSEPEESETEHOICMYESEIIOTUON      41.22 <--
+3      SROWGRDODDRDSDGNHBLXDRDHHNSTNM      67.73
+4      RQNVFQCNCCQCRCFMGAKWCQCGGMRSML     642.37
+5      QPMUEPBMBBPBQBELFZJVBPBFFLQRLK     451.49
+6      POLTDOALAAOAPADKEYIUAOAEEKPQKJ     121.97
+7      ONKSCNZKZZNZOZCJDXHTZNZDDJOPJI    2441.20
+8      NMJRBMYJYYMYNYBICWGSYMYCCINOIH     190.46
+9      MLIQALXIXXLXMXAHBVFRXLXBBHMNHG    1142.90
+10     LKHPZKWHWWKWLWZGAUEQWKWAAGLMGF     358.87
+11     KJGOYJVGVVJVKVYFZTDPVJVZZFKLFE     962.13
+12     JIFNXIUFUUIUJUXEYSCOUIUYYEJKED     354.18
+13     IHEMWHTETTHTITWDXRBNTHTXXDIJDC     241.97
+14     HGDLVGSDSSGSHSVCWQAMSGSWWCHICB     107.36
+15     GFCKUFRCRRFRGRUBVPZLRFRVVBGHBA     136.40
+16     FEBJTEQBQQEQFQTAUOYKQEQUUAFGAZ    1801.65
+17     EDAISDPAPPDPEPSZTNXJPDPTTZEFZY     531.22
+18     DCZHRCOZOOCODORYSMWIOCOSSYDEYX     247.66
+19     CBYGQBNYNNBNCNQXRLVHNBNRRXCDXW     377.60
+20     BAXFPAMXMMAMBMPWQKUGMAMQQWBCWV     489.12
+21     AZWEOZLWLLZLALOVPJTFLZLPPVABVU     815.45
+22     ZYVDNYKVKKYKZKNUOISEKYKOOUZAUT     648.33
+23     YXUCMXJUJJXJYJMTNHRDJXJNNTYZTS    1476.11
+24     XWTBLWITIIWIXILSMGQCIWIMMSXYSR     279.93
+25     WVSAKVHSHHVHWHKRLFPBHVHLLRWXRQ     158.53
+```
 
