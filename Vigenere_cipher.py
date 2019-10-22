@@ -154,7 +154,6 @@ def main():
 
 			ciphertext = encrypt(plaintext, key)	
 			print("Ciphertext: {}".format(ciphertext))
-			print("Plaintext: {}".format(decrypt(ciphertext, key)))
 
 			ask = False	
 		elif text == 'd':
